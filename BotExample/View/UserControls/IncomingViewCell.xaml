@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="BotExample.View.UserControls.IncomingViewCell">
+    <Frame BackgroundColor="#93B7BE"
+           Margin="0,8,40,8">
+        <Label Text="{Binding Message}"
+               TextColor="Black"/>
+    </Frame>
+</ViewCell>

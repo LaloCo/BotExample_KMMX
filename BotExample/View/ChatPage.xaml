@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BotExample.ViewModel"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:behaviors="clr-namespace:BotExample.View.Behaviors"
+             xmlns:uc="clr-namespace:BotExample.View.UserControls"
+             ios:Page.UseSafeArea="true"
+             x:Class="BotExample.View.ChatPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vm:ChatVM x:Key="vm"/>
+            <uc:ChatViewCellTemplateSelector x:Key="chatTemplateSelector"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Grid BindingContext="{StaticResource vm}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="chatListView"
+                  Margin="16,0"
+                  ItemsSource="{Binding Messages}"
+                  ItemTemplate="{StaticResource chatTemplateSelector}"
+                  HasUnevenRows="true"
+                  SeparatorVisibility="None">
+            <ListView.Behaviors>
+                <behaviors:ChatListViewBehavior/>
+            </ListView.Behaviors>
+        </ListView>
+        <Grid Grid.Row="1"
+              Margin="16,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <Entry Text="{Binding Message, Mode=TwoWay}"/>
+            <ImageButton Grid.Column="1"
+                         Source="send"
+                         Padding="15"
+                         BackgroundColor="DodgerBlue"
+                         Command="{Binding SendCommand}"
+                         CommandParameter="{Binding Message}">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="1"/>
+                                <Setter Property="BackgroundColor" Value="DodgerBlue"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.8"/>
+                                <Setter Property="BackgroundColor" Value="DodgerBlue"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="1"/>
+                                <Setter Property="BackgroundColor" Value="LightGray"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </ImageButton>
+        </Grid>
+    </Grid>
+</ContentPage>
